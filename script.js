@@ -24,4 +24,15 @@ function addBookToLibrary(titile, author, pages, read) {
 function renderBooks() {
     const libraryContainer = document.getElementById("library-container");
     libraryContainer.innerHTML = "";
-    
+    myLibrary.forEach((book) => {
+        const card = document.createElement("div");
+        card.classList.add("book-card");
+        card.setAttribute("data-id", book.id);
+        card.innerHTML = `
+        <h3>${book.title}</h3>
+      <p><strong>Author:</strong> ${book.author}</p>
+      <p><strong>Pages:</strong> ${book.pages}</p>
+      <p><strong>Read:</strong> ${book.read}</p>
+      <button class="toggleBtn">Toggle Read</button>
+      <button class="removeBtn">Remove</button>
+        `;

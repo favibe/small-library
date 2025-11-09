@@ -1,0 +1,38 @@
+:root {
+  --bg-color: #f8f9fa;
+  --primary-color: #2a9d8f;
+  --accent-color: #e76f51;
+  --text-color: #264653;
+  --hover-color: #21867a;
+  --card-bg: #ffffff;
+  --border-color: #ddd;
+}
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg-color);
+  padding: 20px;
+}
+
+#libraryContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.book-card {
+  background: var(--card-bg);
+  padding: 20px;
+  width: 200px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.book-card h3 {
+  margin-bottom: 5px;
+}
+
+button {
+  cursor: pointer;
+  margin-top: 10px;
+}
