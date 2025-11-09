@@ -10,19 +10,19 @@ function Book(title, author, pages, read) {
 }
 
 Book.prototype.isRead = function() {
-  this.read = this.read === "Yes" ? "No" : "Yes";
+  this.read = this.read === "Read" ? "Not Read" : "Read";
 };
 
 //function for adding book into array
-function addBookToLibrary(titile, author, pages, read) {
-    const newBook = new Book(titile, author, pages, read);
+function addBookToLibrary(title, author, pages, read) {
+    const newBook = new Book(title, author, pages, read);
     myLibrary.push(newBook);
     renderBooks();
 };
 
 //functions to display books
 function renderBooks() {
-    const libraryContainer = document.getElementById("library-container");
+    const libraryContainer = document.getElementById("libraryContainer");
     libraryContainer.innerHTML = "";
     myLibrary.forEach((book) => {
         const card = document.createElement("div");
@@ -33,6 +33,58 @@ function renderBooks() {
       <p><strong>Author:</strong> ${book.author}</p>
       <p><strong>Pages:</strong> ${book.pages}</p>
       <p><strong>Read:</strong> ${book.read}</p>
-      <button class="toggleBtn">Toggle Read</button>
+      <button class="toggleBtn">Read</button>
       <button class="removeBtn">Remove</button>
         `;
+
+        // Event listener for toggle read button
+        const toggleBtn = card.querySelector(".toggleBtn");
+        toggleBtn.addEventListener("click", () => {
+            book.isRead();
+      renderBooks();
+    });
+
+    card.querySelector(".removeBtn").addEventListener("click", () => {
+      removeBook(book.id);
+    });
+
+    libraryContainer.appendChild(card);
+  });
+}
+
+
+// ❌ Remove book
+function removeBook(id) {
+  const index = myLibrary.findIndex(book => book.id === id);
+  if (index !== -1) {
+    myLibrary.splice(index, 1);
+    renderBooks();
+  }
+}
+
+// 📘 Form logic
+const dialog = document.getElementById("bookDialog");
+const newBookBtn = document.getElementById("newBookBtn");
+const cancelBtn = document.getElementById("cancelBtn");
+const form = document.getElementById("bookForm");
+
+newBookBtn.addEventListener("click", () => dialog.showModal());
+cancelBtn.addEventListener("click", () => dialog.close());
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const title = document.getElementById("title").value;
+  const author = document.getElementById("author").value;
+  const pages = document.getElementById("pages").value;
+  const read = document.getElementById("readStatus").value;
+
+  addBookToLibrary(title, author, pages, read);
+  form.reset();
+  dialog.close();
+});
+
+// Adding a few test books
+addBookToLibrary("The Alchemist", "Paulo Coelho", 197, "Read");
+addBookToLibrary("1984", "George Orwell", 328, "Not Read");
+addBookToLibrary("To Kill a Mockingbird", "Harper Lee", 281, "Read");
